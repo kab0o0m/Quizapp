@@ -1,5 +1,5 @@
 import { View, Image, Text, Pressable, StyleSheet } from "react-native";
-import logo from "../assets/quizlogo.png";
+import logo from "../assets/rubix.png";
 import { useNavigation } from "@react-navigation/native";
 
 export default function GetStarted() {
