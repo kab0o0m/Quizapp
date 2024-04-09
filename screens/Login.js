@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "#333333",
-    fontFamily: "Cochin",
   },
   prompt: {
     paddingVertical: 20,
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 90,
-    backgroundColor: "#333333",
+    backgroundColor: "#58CC03",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 1,
