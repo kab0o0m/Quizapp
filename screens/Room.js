@@ -9,6 +9,7 @@ import {
   Pressable,
   Image,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import logo from "../assets/rubix.png";
 import { useState, useEffect } from "react";
@@ -39,6 +40,15 @@ export default function Room() {
     }
   };
 
+  const enterRoom = () => {
+    if (!room.trim()) {
+      Alert.alert("Invalid room");
+      return;
+    }
+
+    navigation.navigate("Room");
+  };
+
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -48,19 +58,14 @@ export default function Room() {
         <View style={styles.contentContainer}>
           <Image source={logo} style={styles.image} />
         </View>
-        <Text>{username}</Text>
+        <Text style={styles.welcome}>Welcome {username}!</Text>
         <TextInput
           style={styles.input}
           value={room}
           onChangeText={(text) => setRoom(text)}
           placeholder="ROOM PIN"
         />
-        <Pressable
-          onPress={() => {
-            createProfile;
-            navigation.navigate("Room");
-          }}
-          style={styles.button}>
+        <Pressable onPress={enterRoom} style={styles.button}>
           <Text style={styles.text}>LETS GO!</Text>
         </Pressable>
         <Button title="Back" onPress={() => navigation.navigate("Login")}></Button>
@@ -129,5 +134,9 @@ const styles = StyleSheet.create({
     height: 250,
     resizeMode: "contain",
     marginBottom: 20,
+  },
+  welcome: {
+    fontSize: 16,
+    paddingBottom: 20,
   },
 });

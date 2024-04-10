@@ -26,6 +26,7 @@ export default function Login() {
       Alert.alert("Invalid username");
       return;
     }
+    // Add in add profile in backend here
     try {
       await AsyncStorage.setItem("username", username);
     } catch (e) {
