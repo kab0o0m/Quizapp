@@ -9,21 +9,31 @@ import {
   Pressable,
   Image,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import logo from "../assets/rubix.png";
 import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
   const navigation = useNavigation();
   const [username, setUsername] = useState("");
 
-  const createProfile = () => {
+  const createProfile = async () => {
     //Post username to backend
-
-    //Set username ""
+    if (!username.trim()) {
+      Alert.alert("Invalid username");
+      return;
+    }
+    try {
+      await AsyncStorage.setItem("username", username);
+    } catch (e) {
+      Alert.alert(e);
+    }
 
     setUsername("");
+    navigation.navigate("Room");
   };
 
   const dismissKeyboard = () => {
@@ -44,12 +54,7 @@ export default function Login() {
           onChangeText={(text) => setUsername(text)}
           placeholder="NICKNAME"
         />
-        <Pressable
-          onPress={() => {
-            createProfile;
-            navigation.navigate("Room");
-          }}
-          style={styles.button}>
+        <Pressable onPress={createProfile} style={styles.button}>
           <Text style={styles.text}>Create Profile</Text>
         </Pressable>
         <Button title="Back" onPress={() => navigation.navigate("GetStarted")}></Button>
@@ -118,5 +123,12 @@ const styles = StyleSheet.create({
     height: 250,
     resizeMode: "contain",
     marginBottom: 20,
+  },
+  red: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "red",
   },
 });

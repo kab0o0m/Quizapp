@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "#333333",
-    fontFamily: "Cochin",
   },
   contentContainer: {
     alignItems: "center",
@@ -61,7 +60,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "#333333",
-    fontFamily: "Cochin",
   },
   button: {
     alignItems: "center",

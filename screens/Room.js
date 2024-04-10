@@ -11,15 +11,32 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import logo from "../assets/rubix.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Room() {
   const [room, setRoom] = useState(null);
+  const [username, setUsername] = useState("");
   const navigation = useNavigation();
 
   const dismissKeyboard = () => {
     Keyboard.dismiss(); // Dismiss the keyboard
+  };
+
+  useEffect(() => {
+    loadUsername();
+  }, []);
+
+  const loadUsername = async () => {
+    try {
+      const storedUsername = await AsyncStorage.getItem("username");
+      if (storedUsername) {
+        setUsername(storedUsername);
+      }
+    } catch (error) {
+      console.error("Error loading username from local storage:", error);
+    }
   };
 
   return (
@@ -31,6 +48,7 @@ export default function Room() {
         <View style={styles.contentContainer}>
           <Image source={logo} style={styles.image} />
         </View>
+        <Text>{username}</Text>
         <TextInput
           style={styles.input}
           value={room}
