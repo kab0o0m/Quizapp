@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GetStarted from "./screens/Getstarted";
 import Login from "./screens/Login";
 import Room from "./screens/Room";
+import Question from "./screens/Question";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ export default function App() {
         <Stack.Screen name="GetStarted" component={GetStarted} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="Room" component={Room} options={{ headerShown: false }} />
+        <Stack.Screen name="Question" component={Question} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

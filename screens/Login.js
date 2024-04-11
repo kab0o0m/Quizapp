@@ -29,12 +29,11 @@ export default function Login() {
     // Add in add profile in backend here
     try {
       await AsyncStorage.setItem("username", username);
+      setUsername("");
+      navigation.navigate("Room");
     } catch (e) {
       Alert.alert(e);
     }
-
-    setUsername("");
-    navigation.navigate("Room");
   };
 
   const dismissKeyboard = () => {

@@ -22,7 +22,7 @@ export default function Room() {
   const navigation = useNavigation();
 
   const dismissKeyboard = () => {
-    Keyboard.dismiss(); // Dismiss the keyboard
+    Keyboard.dismiss();
   };
 
   useEffect(() => {
@@ -40,13 +40,19 @@ export default function Room() {
     }
   };
 
-  const enterRoom = () => {
+  const enterRoom = async () => {
     if (!room.trim()) {
       Alert.alert("Invalid room");
       return;
     }
 
-    navigation.navigate("Room");
+    try {
+      await AsyncStorage.setItem("room", room);
+      setRoom(null);
+      navigation.navigate("Question");
+    } catch (e) {
+      Alert.alert(e);
+    }
   };
 
   return (
