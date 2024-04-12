@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: "azure",
     alignItems: "center",
     justifyContent: "center",
+    fontFamily: "Roboto",
   },
   titleText: {
     fontSize: 36,
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
-    padding: 10, // Reduced padding to 10 (adjust as needed)
+    padding: 10,
     marginBottom: 20,
     textAlign: "center",
   },

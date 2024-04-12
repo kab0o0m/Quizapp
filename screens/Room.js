@@ -46,6 +46,8 @@ export default function Room() {
       return;
     }
 
+    // Need to check whether room exist in backend
+    // TODO
     try {
       await AsyncStorage.setItem("room", room);
       setRoom(null);
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   welcome: {
-    fontSize: 16,
+    fontSize: 25,
     paddingBottom: 20,
   },
 });
