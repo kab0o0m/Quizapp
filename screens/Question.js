@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import TimerProgress from "../components/TimerProgress";
 
 export default function Question() {
   const [isQuiz, setIsQuiz] = useState(false);
@@ -27,7 +28,6 @@ export default function Question() {
 
   // Extract status of room, question and answers from backend
   // TODO
-  useEffect(() => {});
 
   const loadRoom = async () => {
     try {
@@ -59,6 +59,10 @@ export default function Question() {
     setIsQuiz(false);
   };
 
+  const handleTimerComplete = () => {
+    setIsQuiz(false);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -79,6 +83,7 @@ export default function Question() {
         </View>
       ) : (
         <View style={styles.questionContent}>
+          <TimerProgress durationInSeconds={15} onComplete={handleTimerComplete} />
           <View style={styles.middleContent}>
             <Text style={styles.wait}>{question}</Text>
           </View>
