@@ -1,7 +1,4 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import "react-native-gesture-handler";
-import * as React from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GetStarted from "./screens/Getstarted";
@@ -9,10 +6,17 @@ import Login from "./screens/Login";
 import Room from "./screens/Room";
 import Question from "./screens/Question";
 import TotalScore from "./screens/Totalscore";
+import { useFonts } from "expo-font";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [fontsLoaded, fontError] = useFonts({
+    Montserrat: require("./assets/fonts/Montserrat-Regular.ttf"),
+    "Montserrat-SemiBold": require("./assets/fonts/Montserrat-SemiBold.ttf"),
+    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
+  });
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="GetStarted">

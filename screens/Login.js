@@ -52,6 +52,7 @@ export default function Login() {
           value={username}
           onChangeText={(text) => setUsername(text)}
           placeholder="NICKNAME"
+          autoCapitalize="words"
         />
         <Pressable onPress={createProfile} style={styles.button}>
           <Text style={styles.text}>Create Profile</Text>
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "#333333",
+    fontFamily: "Montserrat-SemiBold",
   },
   prompt: {
     paddingVertical: 20,
@@ -90,6 +92,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     textAlign: "center",
+    fontFamily: "Montserrat-Bold",
   },
   button: {
     alignItems: "center",
@@ -111,6 +114,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+    fontFamily: "Montserrat-SemiBold",
   },
   textInput: {
     fontSize: 16,

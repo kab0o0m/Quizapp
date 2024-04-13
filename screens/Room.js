@@ -72,6 +72,7 @@ export default function Room() {
           value={room}
           onChangeText={(text) => setRoom(text)}
           placeholder="ROOM PIN"
+          keyboardType="numeric"
         />
         <Pressable onPress={enterRoom} style={styles.button}>
           <Text style={styles.text}>LETS GO!</Text>
@@ -96,6 +97,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "#333333",
+    fontFamily: "Montserrat-SemiBold",
   },
   prompt: {
     paddingVertical: 20,
@@ -110,6 +112,7 @@ const styles = StyleSheet.create({
     padding: 10, // Reduced padding to 10 (adjust as needed)
     marginBottom: 20,
     textAlign: "center",
+    fontFamily: "Montserrat-Bold",
   },
   button: {
     alignItems: "center",
@@ -131,6 +134,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+    fontFamily: "Montserrat-SemiBold",
   },
   textInput: {
     fontSize: 16,
@@ -138,6 +142,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "black",
+    fontFamily: "Montserrat-SemiBold",
   },
   image: {
     width: 250,
@@ -148,6 +153,7 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 25,
     paddingBottom: 20,
+    fontFamily: "Montserrat-SemiBold",
   },
   backButton: {
     alignItems: "center",

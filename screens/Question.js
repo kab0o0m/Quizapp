@@ -68,7 +68,7 @@ export default function Question() {
       <View style={styles.header}>
         <Pressable>
           <Text style={styles.backButton} onPress={back}>
-            {"<"}
+            {"< Back"}
           </Text>
         </Pressable>
         <Text style={styles.roomText}>
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     padding: 20,
+
   },
   header: {
     flexDirection: "row",
@@ -121,8 +122,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   backButton: {
-    fontSize: 24,
+    fontSize: 16,
     marginRight: 10,
+    marginTop: 10,
   },
   roomText: {
     fontSize: 24,

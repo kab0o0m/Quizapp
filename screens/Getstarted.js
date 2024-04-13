@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "#333333",
+    fontFamily: "Montserrat-Bold",
   },
   contentContainer: {
     alignItems: "center",
@@ -80,5 +81,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+    fontFamily: "Montserrat-SemiBold",
   },
 });
