@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     padding: 20,
-    fontFamily: "Roboto",
   },
   titleContainer: {
     marginTop: 40,

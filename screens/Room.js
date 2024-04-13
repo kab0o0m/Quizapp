@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   TextInput,
   TouchableWithoutFeedback,
@@ -17,7 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Room() {
-  const [room, setRoom] = useState(null);
+  const [room, setRoom] = useState("");
   const [username, setUsername] = useState("");
   const navigation = useNavigation();
 
@@ -42,19 +41,20 @@ export default function Room() {
 
   const enterRoom = async () => {
     if (!room.trim()) {
-      Alert.alert("Invalid room");
+      Alert.alert("Please enter room pin");
       return;
+    } else {
+      try {
+        await AsyncStorage.setItem("room", room);
+        setRoom(null);
+        navigation.navigate("Question");
+      } catch (e) {
+        Alert.alert(e);
+      }
     }
 
     // Need to check whether room exist in backend
     // TODO
-    try {
-      await AsyncStorage.setItem("room", room);
-      setRoom(null);
-      navigation.navigate("Question");
-    } catch (e) {
-      Alert.alert(e);
-    }
   };
 
   return (
@@ -76,7 +76,9 @@ export default function Room() {
         <Pressable onPress={enterRoom} style={styles.button}>
           <Text style={styles.text}>LETS GO!</Text>
         </Pressable>
-        <Button title="Back" onPress={() => navigation.navigate("Login")}></Button>
+        <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Text style={styles.backText}>Back</Text>
+        </Pressable>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -146,5 +148,21 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 25,
     paddingBottom: 20,
+  },
+  backButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 90,
+    backgroundColor: "azure",
+    width: "80%",
+    marginTop: 10,
+  },
+  backText: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "gray",
   },
 });

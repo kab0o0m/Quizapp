@@ -8,6 +8,7 @@ import GetStarted from "./screens/Getstarted";
 import Login from "./screens/Login";
 import Room from "./screens/Room";
 import Question from "./screens/Question";
+import TotalScore from "./screens/Totalscore";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="Room" component={Room} options={{ headerShown: false }} />
         <Stack.Screen name="Question" component={Question} options={{ headerShown: false }} />
+        <Stack.Screen name="TotalScore" component={TotalScore} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

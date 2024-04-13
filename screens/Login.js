@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
@@ -57,7 +56,9 @@ export default function Login() {
         <Pressable onPress={createProfile} style={styles.button}>
           <Text style={styles.text}>Create Profile</Text>
         </Pressable>
-        <Button title="Back" onPress={() => navigation.navigate("GetStarted")}></Button>
+        <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Text style={styles.backText}>Back</Text>
+        </Pressable>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -69,7 +70,6 @@ const styles = StyleSheet.create({
     backgroundColor: "azure",
     alignItems: "center",
     justifyContent: "center",
-    fontFamily: "Roboto",
   },
   titleText: {
     fontSize: 36,
@@ -131,5 +131,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "red",
+  },
+  backButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 90,
+    backgroundColor: "azure",
+    width: "80%",
+    marginTop: 10,
+  },
+  backText: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "gray",
   },
 });
