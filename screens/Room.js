@@ -33,13 +33,13 @@ export default function Room() {
 
       stomp.connect(
         {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQGdtYWlsLmNvbSIsImV4cCI6MTcxMzEyNTg4MCwiaWF0IjoxNzEzMDg5ODgwfQ.Qy2Bkmsq7utKsNL-f61CVN5SYDuAmUUM4JBeahtDMXs`,
+          Authorization: `Bearer ${token}`,
         },
         () => {
           setStompClient(stomp);
           setIsConnected(true);
 
-          stomp.subscribe(`/topic/room/${room}`, (response) => {
+          stomp.subscribe(`/topic/room/${roomId}`, (response) => {
             const newMessage = JSON.parse(response.body);
             console.log(newMessage);
           });
@@ -84,7 +84,7 @@ export default function Room() {
 
   const handleJoinRoom = async () => {
     if (stompClient) {
-      stompClient.send(`/app/room/4/join`, {}, JSON.stringify({ roomId: 4 }));
+      stompClient.send(`/app/room/${roomId}/join`, {}, JSON.stringify({ roomId: roomId }));
     }
   };
 
