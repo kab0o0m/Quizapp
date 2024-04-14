@@ -26,7 +26,8 @@
     "react-native-signalr": "^1.0.6",
     "react-native-websocket": "^1.0.2",
     "sockjs-client": "^1.6.1",
-    "text-encoding": "^0.7.0"
+    "text-encoding": "^0.7.0",
+    "expo-secure-store": "~12.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

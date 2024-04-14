@@ -5,10 +5,11 @@ import GetStarted from "./screens/Getstarted";
 import Login from "./screens/Login";
 import Room from "./screens/Room";
 import Question from "./screens/Question";
-import TotalScore from "./screens/Totalscore";
+import Waiting from "./screens/Waiting";
 import Register from "./screens/Register";
 import { useFonts } from "expo-font";
 import { useState } from "react";
+import RoomResult from "./screens/RoomResult";
 import * as encoding from "text-encoding";
 
 const Stack = createNativeStackNavigator();
@@ -33,36 +34,13 @@ export default function App() {
         <></>
       ) : (
         <Stack.Navigator initialRouteName="GetStarted">
-          <Stack.Screen
-            name="GetStarted"
-            component={GetStarted}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Register"
-            component={Register}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Room"
-            component={Room}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Question"
-            component={Question}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="TotalScore"
-            component={TotalScore}
-            options={{ headerShown: false }}
-          />
+          <Stack.Screen name="GetStarted" component={GetStarted} options={{ headerShown: false }} />
+          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
+          <Stack.Screen name="Room" component={Room} options={{ headerShown: false }} />
+          <Stack.Screen name="Waiting" component={Waiting} options={{ headerShown: false }} />
+          <Stack.Screen name="Question" component={Question} options={{ headerShown: false }} />
+          <Stack.Screen name="RoomResult" component={RoomResult} options={{ headerShown: false }} />
         </Stack.Navigator>
       )}
     </NavigationContainer>

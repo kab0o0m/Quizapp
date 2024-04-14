@@ -14,14 +14,11 @@ import logo from "../assets/puzzle.png";
 import { Stomp } from "@stomp/stompjs";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import SockJS from "sockjs-client";
+import * as SecureStore from "expo-secure-store";
 
 export default function Room() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [stompClient, setStompClient] = useState(null);
-  const [token, setToken] = useState("");
   const [roomId, setRoomId] = useState(null);
 
   const navigation = useNavigation();
@@ -33,16 +30,11 @@ export default function Room() {
 
       stomp.connect(
         {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${SecureStore.getItem("token")}`,
         },
         () => {
           setStompClient(stomp);
           setIsConnected(true);
-
-          stomp.subscribe(`/topic/room/${roomId}`, (response) => {
-            const newMessage = JSON.parse(response.body);
-            console.log(newMessage);
-          });
         }
       );
 
@@ -52,48 +44,24 @@ export default function Room() {
         }
       };
     }
-  }, [isConnected]);
+  }, [isConnected, roomId]);
 
   useEffect(() => {
-    loadUsername();
+    setIsConnected(true);
   }, []);
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
 
-  console.log(roomId);
-
-  const loadUsername = async () => {
-    try {
-      const dataString = await AsyncStorage.getItem("user");
-      let storedData = {};
-      if (dataString) {
-        storedData = JSON.parse(dataString);
-        console.log("Stored data", storedData);
-        setUsername(storedData.username);
-        setPassword(storedData.password);
-        setToken(storedData.token);
-      }
-
-      setIsConnected(true);
-    } catch (error) {
-      console.error("Error loading user from local storage:", error);
-    }
-  };
-
   const handleJoinRoom = async () => {
-    if (roomId === null) {
-      Alert.alert("Enter room");
-      return;
-    }
-    setIsConnected(true);
     if (stompClient) {
       stompClient.send(`/app/room/${roomId}/join`, {}, JSON.stringify({ roomId: roomId }));
     }
+    navigation.navigate("Waiting", {
+      roomId: roomId,
+    });
   };
-
-  console.log(roomId);
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
@@ -101,7 +69,7 @@ export default function Room() {
         <View style={styles.contentContainer}>
           <Image source={logo} style={styles.image} />
         </View>
-        <Text style={styles.welcome}>Welcome {username}!</Text>
+        <Text style={styles.welcome}>Welcome {SecureStore.getItem("username")}!</Text>
         <TextInput
           style={styles.input}
           onChangeText={(roomId) => setRoomId(roomId)}
