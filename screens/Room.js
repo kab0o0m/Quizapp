@@ -10,14 +10,17 @@ import {
   KeyboardAvoidingView,
   Alert,
 } from "react-native";
-import logo from "../assets/rubix.png";
+import logo from "../assets/puzzle.png";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Room() {
-  const [room, setRoom] = useState("");
+  const [room, setRoom] = useState(null);
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [token, setToken] = useState("");
+
   const navigation = useNavigation();
 
   const dismissKeyboard = () => {
@@ -30,39 +33,30 @@ export default function Room() {
 
   const loadUsername = async () => {
     try {
-      const storedUsername = await AsyncStorage.getItem("user");
-      if (storedUsername) {
-        setUsername(storedUsername);
+      const dataString = await AsyncStorage.getItem("user");
+      let storedData = {};
+      if (dataString) {
+        storedData = JSON.parse(dataString);
+        console.log("Stored data", storedData);
+        setUsername(storedData.username);
+        setPassword(storedData.password);
+        setToken(storedData.token);
       }
     } catch (error) {
-      console.error("Error loading username from local storage:", error);
+      console.error("Error loading user from local storage:", error);
     }
   };
 
-  const enterRoom = async () => {
-    if (room === null) {
-      Alert.alert("Please enter room pin");
+  const handleJoinRoom = async () => {
+    if (room.length === 0) {
+      Alert.alert("Enter room number!");
       return;
-    } else {
-      try {
-        await AsyncStorage.setItem("room", room);
-        setRoom(null);
-        navigation.navigate("Question");
-      } catch (e) {
-        Alert.alert(e);
-      }
     }
-
-    // Need to check whether room exist in backend
-    // TODO
   };
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <View>
-          <Text style={styles.titleText}>QuizBiz 📚</Text>
-        </View>
         <View style={styles.contentContainer}>
           <Image source={logo} style={styles.image} />
         </View>
@@ -74,7 +68,7 @@ export default function Room() {
           placeholder="ROOM PIN"
           keyboardType="numeric"
         />
-        <Pressable onPress={enterRoom} style={styles.button}>
+        <Pressable onPress={handleJoinRoom} style={styles.button}>
           <Text style={styles.text}>LETS GO!</Text>
         </Pressable>
         <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
@@ -147,8 +141,8 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-SemiBold",
   },
   image: {
-    width: 250,
-    height: 250,
+    width: 350,
+    height: 350,
     resizeMode: "contain",
     marginBottom: 20,
   },

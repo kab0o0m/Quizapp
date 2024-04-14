@@ -42,7 +42,7 @@ export default function Login() {
       navigation.navigate("Room");
     } catch (error) {
       console.error("Registration error:", error);
-      Alert.alert("Registration failed. Please try again.");
+      Alert.alert("Enter correct email and password!");
     }
   };
 
@@ -59,7 +59,7 @@ export default function Login() {
           style={styles.input}
           value={username}
           onChangeText={(text) => setUsername(text)}
-          placeholder="NICKNAME"
+          placeholder="EMAIL"
         />
         <TextInput
           style={styles.input}
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 60,
     borderWidth: 1,
-    borderColor: "#000",
+    borderColor: "#FFF",
     borderRadius: 10,
     padding: 10,
     marginBottom: 20,
