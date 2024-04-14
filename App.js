@@ -9,6 +9,7 @@ import TotalScore from "./screens/Totalscore";
 import Register from "./screens/Register";
 import { useFonts } from "expo-font";
 import { useState } from "react";
+import * as encoding from "text-encoding";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,12 +33,36 @@ export default function App() {
         <></>
       ) : (
         <Stack.Navigator initialRouteName="GetStarted">
-          <Stack.Screen name="GetStarted" component={GetStarted} options={{ headerShown: false }} />
-          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-          <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
-          <Stack.Screen name="Room" component={Room} options={{ headerShown: false }} />
-          <Stack.Screen name="Question" component={Question} options={{ headerShown: false }} />
-          <Stack.Screen name="TotalScore" component={TotalScore} options={{ headerShown: false }} />
+          <Stack.Screen
+            name="GetStarted"
+            component={GetStarted}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Room"
+            component={Room}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Question"
+            component={Question}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="TotalScore"
+            component={TotalScore}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       )}
     </NavigationContainer>

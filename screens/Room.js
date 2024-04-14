@@ -11,25 +11,57 @@ import {
   Alert,
 } from "react-native";
 import logo from "../assets/puzzle.png";
+import { Stomp } from "@stomp/stompjs";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import SockJS from "sockjs-client";
 
 export default function Room() {
   const [room, setRoom] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [stompClient, setStompClient] = useState(null);
   const [token, setToken] = useState("");
 
   const navigation = useNavigation();
+  const [isConnected, setIsConnected] = useState(false);
+
+  useEffect(() => {
+    if (isConnected) {
+      const stomp = Stomp.over(() => new SockJS(`http://10.91.18.168:8080/ws`));
+
+      stomp.connect(
+        {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQGdtYWlsLmNvbSIsImV4cCI6MTcxMzEyNTg4MCwiaWF0IjoxNzEzMDg5ODgwfQ.Qy2Bkmsq7utKsNL-f61CVN5SYDuAmUUM4JBeahtDMXs`,
+        },
+        () => {
+          setStompClient(stomp);
+          setIsConnected(true);
+
+          stomp.subscribe(`/topic/room/4`, (response) => {
+            const newMessage = JSON.parse(response.body);
+            console.log(newMessage);
+          });
+        }
+      );
+
+      return () => {
+        if (stompClient) {
+          stompClient.disconnect();
+        }
+      };
+    }
+  }, [isConnected]);
+
+  useEffect(() => {
+    loadUsername();
+    setIsConnected(true);
+  }, []);
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
-
-  useEffect(() => {
-    loadUsername();
-  }, []);
 
   const loadUsername = async () => {
     try {
@@ -48,9 +80,8 @@ export default function Room() {
   };
 
   const handleJoinRoom = async () => {
-    if (room.length === 0) {
-      Alert.alert("Enter room number!");
-      return;
+    if (stompClient) {
+      stompClient.send(`/app/room/4/join`, {}, JSON.stringify({ roomId: 4 }));
     }
   };
 
@@ -71,7 +102,10 @@ export default function Room() {
         <Pressable onPress={handleJoinRoom} style={styles.button}>
           <Text style={styles.text}>LETS GO!</Text>
         </Pressable>
-        <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Pressable
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+        >
           <Text style={styles.backText}>Back</Text>
         </Pressable>
       </KeyboardAvoidingView>

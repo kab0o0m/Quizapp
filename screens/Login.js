@@ -30,7 +30,7 @@ export default function Login() {
     // Add in add profile in backend here
     try {
       data = { email: username, password: password };
-      const response = await axios.post("http://10.0.2.2:8080/login", data);
+      const response = await axios.post("http://10.91.18.168:8080/login", data);
 
       console.log("Registration successful:", response.data);
       const dataString = JSON.stringify(response.data);
@@ -70,7 +70,10 @@ export default function Login() {
         <Pressable onPress={login} style={styles.button}>
           <Text style={styles.text}>LOGIN</Text>
         </Pressable>
-        <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Pressable
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+        >
           <Text style={styles.backText}>Back</Text>
         </Pressable>
       </KeyboardAvoidingView>

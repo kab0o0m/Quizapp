@@ -33,7 +33,10 @@ export default function Login() {
       // Store username in AsyncStorage (if needed)
       const data = { name: username, email: email, password: password };
       // Make POST request to backend
-      const response = await axios.post("http://10.0.2.2:8080/register", data);
+      const response = await axios.post(
+        "http://10.91.18.168:8080/register",
+        data
+      );
 
       console.log("Registration successful:", response.data);
       setUsername("");
@@ -78,7 +81,10 @@ export default function Login() {
         <Pressable onPress={createProfile} style={styles.button}>
           <Text style={styles.text}>Create Profile</Text>
         </Pressable>
-        <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Pressable
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+        >
           <Text style={styles.backText}>Back</Text>
         </Pressable>
       </KeyboardAvoidingView>
