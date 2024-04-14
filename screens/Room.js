@@ -29,17 +29,17 @@ export default function Room() {
 
   useEffect(() => {
     if (isConnected) {
-      const stomp = Stomp.over(() => new SockJS(`http://10.91.18.168:8080/ws`));
+      const stomp = Stomp.over(() => new SockJS(`http://10.0.2.2:8080/ws`));
 
       stomp.connect(
         {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQGdtYWlsLmNvbSIsImV4cCI6MTcxMzEyNTg4MCwiaWF0IjoxNzEzMDg5ODgwfQ.Qy2Bkmsq7utKsNL-f61CVN5SYDuAmUUM4JBeahtDMXs`,
+          Authorization: `Bearer ${token}`,
         },
         () => {
           setStompClient(stomp);
           setIsConnected(true);
 
-          stomp.subscribe(`/topic/room/4`, (response) => {
+          stomp.subscribe(`/topic/room/${room}`, (response) => {
             const newMessage = JSON.parse(response.body);
             console.log(newMessage);
           });
@@ -56,7 +56,6 @@ export default function Room() {
 
   useEffect(() => {
     loadUsername();
-    setIsConnected(true);
   }, []);
 
   const dismissKeyboard = () => {
@@ -80,8 +79,13 @@ export default function Room() {
   };
 
   const handleJoinRoom = async () => {
+    if (room === null) {
+      Alert.alert("Enter room");
+      return;
+    }
+    setIsConnected(true);
     if (stompClient) {
-      stompClient.send(`/app/room/4/join`, {}, JSON.stringify({ roomId: 4 }));
+      stompClient.send(`/app/room/${room}/join`, {}, JSON.stringify({ roomId: room }));
     }
   };
 
@@ -102,10 +106,7 @@ export default function Room() {
         <Pressable onPress={handleJoinRoom} style={styles.button}>
           <Text style={styles.text}>LETS GO!</Text>
         </Pressable>
-        <Pressable
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
+        <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
           <Text style={styles.backText}>Back</Text>
         </Pressable>
       </KeyboardAvoidingView>
