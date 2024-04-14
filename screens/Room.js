@@ -18,11 +18,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SockJS from "sockjs-client";
 
 export default function Room() {
-  const [room, setRoom] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [stompClient, setStompClient] = useState(null);
   const [token, setToken] = useState("");
+  const [roomId, setRoomId] = useState(null);
 
   const navigation = useNavigation();
   const [isConnected, setIsConnected] = useState(false);
@@ -33,7 +33,7 @@ export default function Room() {
 
       stomp.connect(
         {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQGdtYWlsLmNvbSIsImV4cCI6MTcxMzEyNTg4MCwiaWF0IjoxNzEzMDg5ODgwfQ.Qy2Bkmsq7utKsNL-f61CVN5SYDuAmUUM4JBeahtDMXs`,
         },
         () => {
           setStompClient(stomp);
@@ -62,6 +62,8 @@ export default function Room() {
     Keyboard.dismiss();
   };
 
+  console.log(roomId);
+
   const loadUsername = async () => {
     try {
       const dataString = await AsyncStorage.getItem("user");
@@ -73,21 +75,20 @@ export default function Room() {
         setPassword(storedData.password);
         setToken(storedData.token);
       }
+
+      setIsConnected(true);
     } catch (error) {
       console.error("Error loading user from local storage:", error);
     }
   };
 
   const handleJoinRoom = async () => {
-    if (room === null) {
-      Alert.alert("Enter room");
-      return;
-    }
-    setIsConnected(true);
     if (stompClient) {
-      stompClient.send(`/app/room/${room}/join`, {}, JSON.stringify({ roomId: room }));
+      stompClient.send(`/app/room/4/join`, {}, JSON.stringify({ roomId: 4 }));
     }
   };
+
+  console.log(roomId);
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
@@ -98,8 +99,7 @@ export default function Room() {
         <Text style={styles.welcome}>Welcome {username}!</Text>
         <TextInput
           style={styles.input}
-          value={room}
-          onChangeText={(text) => setRoom(text)}
+          onChangeText={(roomId) => setRoomId(roomId)}
           placeholder="ROOM PIN"
           keyboardType="numeric"
         />

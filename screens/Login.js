@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import logo from "../assets/puzzle.png";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
+import { apiClient } from "../lib/axios";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -29,10 +29,12 @@ export default function Login() {
     }
     // Add in add profile in backend here
     try {
+      console.log("test");
       data = { email: username, password: password };
       const response = await axios.post("http://10.0.2.2:8080/login", data);
+      const response = await apiClient.post("/login", data);
 
-      console.log("Registration successful:", response.data);
+      console.log("Login successful:", response.data);
       const dataString = JSON.stringify(response.data);
 
       await AsyncStorage.setItem("user", dataString);
