@@ -11,6 +11,7 @@ export default function RoomDetail({ route }) {
   const [isConnected, setIsConnected] = useState(false);
   const [question, setQuestion] = useState({});
   const navigation = useNavigation();
+  const choiceColors = ["#2C70AE", "#2D9DA6", "#EFA928", "#D5526B"];
 
   useEffect(() => {
     if (!isConnected) {
@@ -96,7 +97,7 @@ export default function RoomDetail({ route }) {
         {question?.choices?.map((choice, index) => (
           <TouchableOpacity
             key={index}
-            style={styles.choice}
+            style={[styles.choice, { backgroundColor: choiceColors[index % choiceColors.length] }]}
             onPress={() => handleAnswerQuestion(choice?.id)}>
             <Text style={styles.choiceText}>{choice.choiceText}</Text>
           </TouchableOpacity>
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#6985F3",
+    backgroundColor: "#FFF",
     padding: 20,
   },
   title: {
@@ -120,13 +121,13 @@ const styles = StyleSheet.create({
     marginTop: 200,
     marginBottom: 50,
     fontFamily: "Montserrat",
-    color: "#FFF",
+    color: "#6985F3",
   },
   questionText: {
-    fontSize: 18,
+    fontSize: 20,
     marginBottom: 20,
     fontFamily: "Montserrat",
-    color: "#FFF",
+    color: "#000",
   },
   choicesContainer: {
     flexDirection: "row",
