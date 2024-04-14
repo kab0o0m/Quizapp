@@ -60,17 +60,18 @@ const Waiting = ({ route }) => {
   useEffect(() => {
     getParticipants();
     setIsConnected(true);
-  }, []);
+  });
 
   return (
     <View style={styles.container}>
-      <Text style={styles.roomIdText}>Room ID: {roomId}</Text>
-      <View>
+      <Text style={styles.roomIdText}>Room {roomId}</Text>
+      <View style={styles.messageContainer}>
+        <Text style={styles.message}>Please wait for participants to join...</Text>
+      </View>
+      <View style={styles.participantsContainer}>
         {participants.map((el, index) => (
-          <View key={index}>
-            <Text>
-              {index + 1}. {el?.user?.name}
-            </Text>
+          <View key={index} style={styles.participantContainer}>
+            <Text style={styles.participantText}>{el?.user?.name}</Text>
           </View>
         ))}
       </View>
@@ -80,21 +81,42 @@ const Waiting = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
+    flexGrow: 1,
+    padding: 20,
+    justifyContent: "flex-start",
     alignItems: "center",
-  },
-  input: {
-    height: 40,
-    width: 200,
-    borderColor: "gray",
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    marginBottom: 20,
+    backgroundColor: "#6985F3",
   },
   roomIdText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginVertical: 50,
+    color: "#FFF",
+    fontFamily: "Montserrat",
+  },
+  message: {
     fontSize: 18,
+    marginVertical: 30,
+    fontFamily: "Montserrat",
+    color: "#FFF",
+  },
+  participantsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
+  participantContainer: {
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
     marginBottom: 10,
+    marginRight: 10,
+  },
+  participantText: {
+    fontSize: 20,
+    color: "#333333",
+    fontFamily: "Montserrat-SemiBold",
   },
 });
 

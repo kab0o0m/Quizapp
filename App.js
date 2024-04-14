@@ -9,7 +9,6 @@ import Waiting from "./screens/Waiting";
 import Register from "./screens/Register";
 import { useFonts } from "expo-font";
 import { useState } from "react";
-import RoomResult from "./screens/RoomResult";
 import * as encoding from "text-encoding";
 
 const Stack = createNativeStackNavigator();
@@ -40,7 +39,6 @@ export default function App() {
           <Stack.Screen name="Room" component={Room} options={{ headerShown: false }} />
           <Stack.Screen name="Waiting" component={Waiting} options={{ headerShown: false }} />
           <Stack.Screen name="Question" component={Question} options={{ headerShown: false }} />
-          <Stack.Screen name="RoomResult" component={RoomResult} options={{ headerShown: false }} />
         </Stack.Navigator>
       )}
     </NavigationContainer>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import * as SecureStore from "expo-secure-store";
@@ -32,7 +32,7 @@ export default function RoomDetail({ route }) {
         });
 
         stomp.subscribe(`/topic/room/${route.params.roomId}/end`, (response) => {
-          navigation.navigate(`RoomResult`, {
+          navigation.navigate(`Room`, {
             roomId: route.params.roomId,
             questionId: route.params.questionId,
           });
@@ -89,16 +89,64 @@ export default function RoomDetail({ route }) {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>User Question</Text>
-      <Text>{question?.questionText}?</Text>
-      <View>
+    <View style={styles.container}>
+      <Text style={styles.title}>ROOM: {route.params.roomId}</Text>
+      <Text style={styles.questionText}>{question?.questionText}?</Text>
+      <View style={styles.choicesContainer}>
         {question?.choices?.map((choice, index) => (
-          <Text key={index} onPress={() => handleAnswerQuestion(choice?.id)}>
-            {choice.choiceText}
-          </Text>
+          <TouchableOpacity
+            key={index}
+            style={styles.choice}
+            onPress={() => handleAnswerQuestion(choice?.id)}>
+            <Text style={styles.choiceText}>{choice.choiceText}</Text>
+          </TouchableOpacity>
         ))}
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#6985F3",
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginTop: 200,
+    marginBottom: 50,
+    fontFamily: "Montserrat",
+    color: "#FFF",
+  },
+  questionText: {
+    fontSize: 18,
+    marginBottom: 20,
+    fontFamily: "Montserrat",
+    color: "#FFF",
+  },
+  choicesContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 150,
+  },
+  choice: {
+    backgroundColor: "#EAEAEA",
+    paddingVertical: 120,
+    paddingHorizontal: 75,
+    marginBottom: 20,
+    borderRadius: 8,
+    alignItems: "center",
+    marginHorizontal: "2%",
+  },
+  choiceText: {
+    fontSize: 18,
+    color: "#333333",
+    fontFamily: "Montserrat-Bold",
+  },
+});
