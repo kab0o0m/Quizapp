@@ -5,11 +5,11 @@ import GetStarted from "./screens/Getstarted";
 import Login from "./screens/Login";
 import Room from "./screens/Room";
 import Question from "./screens/Question";
-import TotalScore from "./screens/Totalscore";
+import Waiting from "./screens/Waiting";
 import Register from "./screens/Register";
 import { useFonts } from "expo-font";
 import { useState } from "react";
-import * as encoding from "text-encoding";
+import RoomResult from "./screens/RoomResult";
 
 const Stack = createNativeStackNavigator();
 
@@ -54,13 +54,18 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
+            name="Waiting"
+            component={Waiting}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="Question"
             component={Question}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="TotalScore"
-            component={TotalScore}
+            name="RoomResult"
+            component={RoomResult}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

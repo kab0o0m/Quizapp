@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,47 +10,35 @@ import {
   Image,
   KeyboardAvoidingView,
   Alert,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import logo from "../assets/puzzle.png";
-import { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { apiClient } from "../lib/axios";
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import logo from '../assets/puzzle.png';
+import { apiClient } from '../lib/axios';
+import * as SecureStore from 'expo-secure-store';
 
 export default function Login() {
   const navigation = useNavigation();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [userData, setUserData] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
 
   const login = async () => {
-    //Post username to backend
-    if (!username.trim()) {
-      Alert.alert("Invalid username");
-      return;
-    }
-    // Add in add profile in backend here
     try {
-      console.log("test");
-      data = { email: username, password: password };
-      const response = await apiClient.post("/login", data);
-
-      console.log("Login successful:", response.data);
-      const dataString = JSON.stringify(response.data);
-
-      await AsyncStorage.setItem("user", dataString);
-
-      setUsername("");
-      setPassword("");
-      navigation.navigate("Room");
+      console.log(userData);
+      const { data } = await apiClient.post('/login', userData);
+      await SecureStore.setItemAsync('token', data?.token);
+      await SecureStore.setItemAsync('email', data?.email);
+      await SecureStore.setItemAsync('username', data?.username);
+      navigation.navigate('Room');
     } catch (error) {
-      console.error("Registration error:", error);
-      Alert.alert("Enter correct email and password!");
+      console.error('Login error:', error);
+      setError('Invalid email or password'); // Provide user feedback
     }
   };
 
   const dismissKeyboard = () => {
     Keyboard.dismiss(); // Dismiss the keyboard
   };
+
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -58,23 +47,20 @@ export default function Login() {
         </View>
         <TextInput
           style={styles.input}
-          value={username}
-          onChangeText={(text) => setUsername(text)}
+          onChangeText={(text) => setUserData({ ...userData, email: text })}
           placeholder="EMAIL"
         />
         <TextInput
           style={styles.input}
-          value={password}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={(text) => setUserData({ ...userData, password: text })}
           placeholder="PASSWORD"
+          secureTextEntry={true} // Hide password input
         />
         <Pressable onPress={login} style={styles.button}>
           <Text style={styles.text}>LOGIN</Text>
         </Pressable>
-        <Pressable
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
+        {error ? <Text style={styles.red}>{error}</Text> : null}
+        <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
           <Text style={styles.backText}>Back</Text>
         </Pressable>
       </KeyboardAvoidingView>
@@ -85,90 +71,76 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#6985F3",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#6985F3',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  titleText: {
-    fontSize: 36,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "#333333",
-    fontFamily: "Montserrat-SemiBold",
-  },
-  prompt: {
-    paddingVertical: 20,
-    fontSize: 20,
+  contentContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
   },
   input: {
-    width: "80%",
+    width: '80%',
     height: 60,
     borderWidth: 1,
-    borderColor: "#FFF",
+    borderColor: '#FFF',
     borderRadius: 10,
     padding: 10,
     marginBottom: 20,
-    textAlign: "center",
-    fontFamily: "Montserrat-Bold",
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Bold',
     fontSize: 20,
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
   },
   button: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: 12,
     paddingHorizontal: 90,
-    backgroundColor: "#58CC03",
-    shadowColor: "#000",
+    backgroundColor: '#58CC03',
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 3,
     elevation: 5,
     borderRadius: 10,
-    width: "80%",
+    width: '80%',
   },
   text: {
     fontSize: 16,
     lineHeight: 21,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     letterSpacing: 0.25,
-    color: "white",
-    fontFamily: "Montserrat-SemiBold",
-  },
-  textInput: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "black",
-  },
-  image: {
-    width: 350,
-    height: 350,
-    resizeMode: "contain",
-    marginBottom: 20,
+    color: 'white',
+    fontFamily: 'Montserrat-SemiBold',
   },
   red: {
     fontSize: 16,
     lineHeight: 21,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     letterSpacing: 0.25,
-    color: "red",
+    color: 'red',
+    marginBottom: 10,
   },
   backButton: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: 12,
     paddingHorizontal: 90,
-    backgroundColor: "#6985F3",
-    width: "80%",
+    backgroundColor: '#6985F3',
+    width: '80%',
     marginTop: 10,
   },
   backText: {
     fontSize: 16,
     lineHeight: 21,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     letterSpacing: 0.25,
-    color: "#2E2D2D",
+    color: '#2E2D2D',
+  },
+  image: {
+    width: 350,
+    height: 350,
+    resizeMode: 'contain',
   },
 });
