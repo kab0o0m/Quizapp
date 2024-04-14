@@ -19,28 +19,29 @@ import axios from "axios";
 export default function Login() {
   const navigation = useNavigation();
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const login = async () => {
-    //Post username to backend
-    if (!username.trim()) {
-      Alert.alert("Invalid username");
+  const createProfile = async () => {
+    // Validate input fields
+    if (!username.trim() || !email.trim() || !password.trim()) {
+      Alert.alert("Invalid username, email, or password!");
       return;
     }
-    // Add in add profile in backend here
+
     try {
-      data = { email: username, password: password };
-      const response = await axios.post("http://10.0.2.2:8080/login", data);
+      // Store username in AsyncStorage (if needed)
+      const data = { name: username, email: email, password: password };
+      // Make POST request to backend
+      const response = await axios.post("http://10.0.2.2:8080/register", data);
 
       console.log("Registration successful:", response.data);
-      const dataString = JSON.stringify(response.data);
-
-      await AsyncStorage.setItem("user", dataString);
-
       setUsername("");
+      setEmail("");
       setPassword("");
-      navigation.navigate("Room");
+      navigation.navigate("Login"); // Navigate to the next screen upon successful registration
     } catch (error) {
+      // Handle API request errors
       console.error("Registration error:", error);
       Alert.alert("Registration failed. Please try again.");
     }
@@ -49,6 +50,7 @@ export default function Login() {
   const dismissKeyboard = () => {
     Keyboard.dismiss(); // Dismiss the keyboard
   };
+
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -63,12 +65,18 @@ export default function Login() {
         />
         <TextInput
           style={styles.input}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          placeholder="EMAIL"
+        />
+        <TextInput
+          style={styles.input}
           value={password}
           onChangeText={(text) => setPassword(text)}
           placeholder="PASSWORD"
         />
-        <Pressable onPress={login} style={styles.button}>
-          <Text style={styles.text}>LOGIN</Text>
+        <Pressable onPress={createProfile} style={styles.button}>
+          <Text style={styles.text}>Create Profile</Text>
         </Pressable>
         <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
           <Text style={styles.backText}>Back</Text>
@@ -142,7 +150,6 @@ const styles = StyleSheet.create({
     width: 350,
     height: 350,
     resizeMode: "contain",
-    marginBottom: 20,
   },
   red: {
     fontSize: 16,

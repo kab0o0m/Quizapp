@@ -21,7 +21,7 @@ export default function Question() {
   const [textStatus, setTextStatus] = useState(
     "Please wait for your teacher to start the question..."
   );
-
+a
   const navigation = useNavigation();
 
   // Load room

@@ -30,7 +30,7 @@ export default function Room() {
 
   const loadUsername = async () => {
     try {
-      const storedUsername = await AsyncStorage.getItem("username");
+      const storedUsername = await AsyncStorage.getItem("user");
       if (storedUsername) {
         setUsername(storedUsername);
       }
