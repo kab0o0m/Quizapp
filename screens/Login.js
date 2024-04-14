@@ -31,7 +31,7 @@ export default function Login() {
     try {
       console.log("test");
       data = { email: username, password: password };
-      const response = await axios.post("http://10.0.2.2:8080/login", data);
+      const response = await apiClient.post("/login", data);
 
       console.log("Login successful:", response.data);
       const dataString = JSON.stringify(response.data);

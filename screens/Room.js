@@ -83,6 +83,11 @@ export default function Room() {
   };
 
   const handleJoinRoom = async () => {
+    if (roomId === null) {
+      Alert.alert("Enter room");
+      return;
+    }
+    setIsConnected(true);
     if (stompClient) {
       stompClient.send(`/app/room/${roomId}/join`, {}, JSON.stringify({ roomId: roomId }));
     }
