@@ -33,7 +33,7 @@ export default function Login() {
       // Store username in AsyncStorage (if needed)
       const data = { name: username, email: email, password: password };
       // Make POST request to backend
-      const response = await axios.post("http://10.0.2.2:8080/register", data);
+      const response = await axios.post("http://192.168.1.64:8080/register", data);
 
       console.log("Registration successful:", response.data);
       setUsername("");

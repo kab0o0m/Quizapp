@@ -26,7 +26,7 @@ export default function Room() {
 
   useEffect(() => {
     if (isConnected) {
-      const stomp = Stomp.over(() => new SockJS(`http://10.0.2.2:8080/ws`));
+      const stomp = Stomp.over(() => new SockJS(`http://192.168.1.64:8080/ws`));
 
       stomp.connect(
         {

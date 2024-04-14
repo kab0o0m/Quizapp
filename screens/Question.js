@@ -15,7 +15,7 @@ export default function RoomDetail({ route }) {
 
   useEffect(() => {
     if (!isConnected) {
-      const stomp = Stomp.over(() => new SockJS(`http://10.0.2.2:8080/ws`));
+      const stomp = Stomp.over(() => new SockJS(`http://192.168.1.64:8080/ws`));
 
       stomp.connect({ Authorization: `Bearer ${SecureStore.getItem("token")}` }, () => {
         setStompClient(stomp);
