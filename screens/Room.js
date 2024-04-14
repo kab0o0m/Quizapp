@@ -44,7 +44,7 @@ export default function Room() {
         }
       };
     }
-  }, [isConnected]);
+  }, [isConnected, roomId]);
 
   useEffect(() => {
     setIsConnected(true);

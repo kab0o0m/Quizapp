@@ -40,7 +40,7 @@ const RoomResult = ({ route }) => {
                     ))
                 }
             </View>
-            <View onPress={() => navigation.navigate("Home")}>Home</View>
+            <Text onPress={() => navigation.navigate("Home")}>Home</Text>
         </View>
     );
 }

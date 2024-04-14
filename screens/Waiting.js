@@ -21,7 +21,7 @@ const Waiting = ({ route }) => {
                     Authorization: `Bearer ${SecureStore.getItem('token')}`
                 }
             });
-            console.log(data);
+
             setParticipants(data);
         } catch (err) {
             console.log(err);

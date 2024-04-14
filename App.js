@@ -10,6 +10,7 @@ import Register from "./screens/Register";
 import { useFonts } from "expo-font";
 import { useState } from "react";
 import RoomResult from "./screens/RoomResult";
+import * as encoding from "text-encoding";
 
 const Stack = createNativeStackNavigator();
 
