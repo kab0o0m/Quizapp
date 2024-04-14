@@ -11,7 +11,7 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import logo from "../assets/rubix.png";
+import logo from "../assets/puzzle.png";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -52,7 +52,7 @@ export default function Login() {
           value={username}
           onChangeText={(text) => setUsername(text)}
           placeholder="NICKNAME"
-          autoCapitalize="words"
+          autoCapitalize={"characters"}
         />
         <Pressable onPress={createProfile} style={styles.button}>
           <Text style={styles.text}>Create Profile</Text>
@@ -68,7 +68,7 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "azure",
+    backgroundColor: "#6985F3",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -87,12 +87,14 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 60,
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
+    borderColor: "#000",
+    borderRadius: 10,
     padding: 10,
     marginBottom: 20,
     textAlign: "center",
     fontFamily: "Montserrat-Bold",
+    fontSize: 20,
+    backgroundColor: "#FFF",
   },
   button: {
     alignItems: "center",
@@ -124,8 +126,8 @@ const styles = StyleSheet.create({
     color: "black",
   },
   image: {
-    width: 250,
-    height: 250,
+    width: 350,
+    height: 350,
     resizeMode: "contain",
     marginBottom: 20,
   },
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 90,
-    backgroundColor: "azure",
+    backgroundColor: "#6985F3",
     width: "80%",
     marginTop: 10,
   },
@@ -150,6 +152,6 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     fontWeight: "bold",
     letterSpacing: 0.25,
-    color: "gray",
+    color: "#2E2D2D",
   },
 });

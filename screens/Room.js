@@ -40,7 +40,7 @@ export default function Room() {
   };
 
   const enterRoom = async () => {
-    if (!room.trim()) {
+    if (room === null) {
       Alert.alert("Please enter room pin");
       return;
     } else {
@@ -88,7 +88,7 @@ export default function Room() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "azure",
+    backgroundColor: "#6985F3",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#333333",
+    color: "#FFF",
     fontFamily: "Montserrat-SemiBold",
   },
   prompt: {
@@ -108,11 +108,13 @@ const styles = StyleSheet.create({
     height: 60,
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 5,
+    borderRadius: 10,
     padding: 10, // Reduced padding to 10 (adjust as needed)
     marginBottom: 20,
     textAlign: "center",
     fontFamily: "Montserrat-Bold",
+    backgroundColor: "#FFF",
+    fontSize: 20,
   },
   button: {
     alignItems: "center",
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 90,
-    backgroundColor: "azure",
+    backgroundColor: "#6985F3",
     width: "80%",
     marginTop: 10,
   },
@@ -169,6 +171,6 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     fontWeight: "bold",
     letterSpacing: 0.25,
-    color: "gray",
+    color: "#2E2D2D",
   },
 });

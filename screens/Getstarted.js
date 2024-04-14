@@ -1,5 +1,5 @@
 import { View, Image, Text, Pressable, StyleSheet } from "react-native";
-import logo from "../assets/rubix.png";
+import logo from "../assets/puzzle.png";
 import { useNavigation } from "@react-navigation/native";
 
 export default function GetStarted() {
@@ -30,7 +30,7 @@ export default function GetStarted() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "azure",
+    backgroundColor: "#6985F3",
     alignItems: "center",
     justifyContent: "space-around",
     padding: 20,
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   image: {
-    width: 250,
-    height: 250,
+    width: 350,
+    height: 350,
     resizeMode: "contain",
     marginBottom: 20,
   },

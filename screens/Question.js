@@ -18,6 +18,9 @@ export default function Question() {
   const [question, setQuestion] = useState("What sports do you like to play?");
   const [room, setRoom] = useState("");
   const [answers, setAnswers] = useState(["Basketball", "Soccer", "Cricket", "Volleyball"]);
+  const [textStatus, setTextStatus] = useState(
+    "Please wait for your teacher to start the question..."
+  );
 
   const navigation = useNavigation();
 
@@ -57,10 +60,12 @@ export default function Question() {
     //Submit answer to backend or check whether correct then submit score to backend
     console.log("Submitted ", answer);
     setIsQuiz(false);
+    setTextStatus("Please wait for the next question...");
   };
 
   const handleTimerComplete = () => {
     setIsQuiz(false);
+    console.log("Times up");
   };
 
   return (
@@ -78,7 +83,7 @@ export default function Question() {
       {!isQuiz ? (
         <View style={styles.content}>
           <View style={styles.middleContent}>
-            <Text style={styles.wait}>Please wait for your teacher to start the question...</Text>
+            <Text style={styles.wait}>{textStatus}</Text>
           </View>
         </View>
       ) : (
@@ -93,7 +98,7 @@ export default function Question() {
             numColumns={2}
             contentContainerStyle={styles.answerContainer}
             renderItem={({ item }) => (
-              <TouchableOpacity style={styles.answerButton} onPress={submitAnswer(item)}>
+              <TouchableOpacity style={styles.answerButton} onPress={() => submitAnswer(item)}>
                 <Text style={styles.answerText}>{item}</Text>
               </TouchableOpacity>
             )}
@@ -112,7 +117,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     padding: 20,
-
   },
   header: {
     flexDirection: "row",
@@ -130,11 +134,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginTop: 10,
+    fontFamily: "Montserrat-Bold",
   },
   wait: {
     fontSize: 20,
     padding: 10,
     textAlign: "center",
+    fontFamily: "Montserrat-Bold",
   },
   question: {
     fontSize: 18,
@@ -142,26 +148,27 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   answerContainer: {
-    paddingHorizontal: 10, // Horizontal padding to create space between columns
-    paddingTop: 10, // Top padding to create space between rows
+    paddingHorizontal: 10,
+    paddingTop: 10,
   },
   answerButton: {
-    width: "40%", // Width of each answer box (adjust based on desired spacing)
-    aspectRatio: 2, // Maintain aspect ratio (adjust as needed for desired height)
+    width: "40%",
+    aspectRatio: 2,
     backgroundColor: "midnightblue",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
-    marginBottom: 20, // Vertical spacing between answer boxes
-    marginHorizontal: "5%", // Horizontal spacing between answer boxes
+    marginBottom: 20,
+    marginHorizontal: "5%",
   },
   answerText: {
     fontSize: 16,
     color: "white",
     fontWeight: "bold",
+    fontFamily: "Montserrat-Bold",
   },
   roomName: {
-    color: "#58CC03", // Example color
+    color: "#58CC03",
   },
   content: {
     flex: 1,
