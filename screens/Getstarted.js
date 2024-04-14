@@ -18,7 +18,7 @@ export default function GetStarted() {
 
       <Pressable
         onPress={() => {
-          navigation.navigate("Login");
+          navigation.navigate("Register");
         }}
         style={styles.button}>
         <Text style={styles.text}>GET STARTED</Text>
